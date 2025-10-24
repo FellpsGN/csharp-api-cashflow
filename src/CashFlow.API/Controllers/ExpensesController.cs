@@ -1,6 +1,7 @@
 using CashFlow.Application.UseCases.Expenses.Register;
 using Microsoft.AspNetCore.Mvc;
 using CashFlow.Communication.Requests;
+using CashFlow.Communication.Responses;
 
 namespace CashFlow.API.Controllers;
 
@@ -12,10 +13,23 @@ namespace CashFlow.API.Controllers;
         [ProducesResponseType(StatusCodes.Status201Created)]
         public IActionResult Register([FromBody] RequestRegisterExpenseJson request)
         {
-            var useCase = new RegisterExpenseUseCase();
-            var response = useCase.Execute(request);
+            try
+            {
+                var useCase = new RegisterExpenseUseCase();
+                var response = useCase.Execute(request);
+                return Created(string.Empty, response);
+            }
+            catch (ArgumentException ex)
+            {
+                var errorResponse = new ResponseErrorJson(ex.Message);
+                return BadRequest(errorResponse);
+            }
+            catch
+            {
+                var errorResponse = new ResponseErrorJson("Unknow error.");
+                return StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
+            }
             
-            return Created(string.Empty, response);
         }
     }
 

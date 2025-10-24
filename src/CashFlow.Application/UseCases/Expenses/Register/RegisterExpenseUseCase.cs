@@ -9,7 +9,7 @@ public class RegisterExpenseUseCase
     private void Validate(RequestRegisterExpenseJson request)
     {
         var isExpenseTitleEmpty = string.IsNullOrWhiteSpace(request.Title);
-        if (isExpenseTitleEmpty) throw new ArgumentNullException("Title can't be empty.");
+        if (isExpenseTitleEmpty) throw new ArgumentNullException("Title");
 
         if (request.Amount <= 0) throw new ArgumentException("Amount must be positive.");
 

@@ -21,12 +21,12 @@ namespace CashFlow.API.Controllers;
             }
             catch (ArgumentException ex)
             {
-                var errorResponse = new ResponseErrorJson(ex.Message);
+                var errorResponse = new ResponseErrorJson { ErrorMessage = ex.Message };
                 return BadRequest(errorResponse);
             }
             catch
             {
-                var errorResponse = new ResponseErrorJson("Unknow error.");
+                var errorResponse = new ResponseErrorJson { ErrorMessage = "Unknow error." };
                 return StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }
             

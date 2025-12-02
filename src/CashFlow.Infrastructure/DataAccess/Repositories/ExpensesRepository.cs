@@ -13,6 +13,5 @@ internal class ExpensesRepository : IExpenseRepository
     public void Add(Expense expense)
     {
         _dbContext.Expenses.Add(expense);
-        _dbContext.SaveChanges();
     }
-}//modularize dependency injection with AddInfrastructure extension // register CashFlowDbContext and organize DI setup
+}
